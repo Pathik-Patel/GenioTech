@@ -4,14 +4,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff512f, #dd2476); /* Gradient background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-form {
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7)); /* White semi-transparent background */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Box shadow for a subtle lift */
+            width: 350px;
+            color: #2c3e50; /* Dark blue text color */
+        }
+
+        .login-form h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: black; /* Change title color for emphasis */
+        }
+
+        .login-form label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            color: #2c3e50; /* Dark blue text color for input */
+            background-color: #FFFFFF; /* White background for input */
+        }
+
+        .login-form button {
+            width: 100%;
+            padding: 15px;
+            background-color: #dd2476; /* Pink button background */
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .login-form button:hover {
+            background-color: #ff512f; /* Brighter pink for hover */
+        }
+
+        .login-form a {
+                display: block;
+                text-align: center;
+                margin-top: 20px;
+                color: #2c3e50; /* Dark blue text color for the link */
+                text-decoration: none;
+                font-weight: bold;
+                transition: color 0.3s ease-in-out;
+        }
+
+        .login-form a:hover {
+            color: #dd2476; /* Change link color on hover */
+        }
+    </style>
 </head>
 <body>
-    <h2>Login</h2>
-    <form method="post">
-        {% csrf_token %}
-        
-        <button type="submit">Login</button>
-    </form>
-    <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
+    <div class="login-form">
+        <h2>Welcome Back!</h2>
+        <form method="post">
+            {% csrf_token %}
+            <label for="id_username">Email:</label>
+            <input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="254" required="" id="id_username">
+
+            <label for="id_password">Password:</label>
+            <input type="password" name="password" autocomplete="current-password" required="" id="id_password">
+
+            <button type="submit">Login</button>
+            <a href="{% url 'password_reset' %}">Forgot password?</a>
+        </form>
+
+        <a href="{% url 'register' %}">Don't have an account? Register now!</a>
+    </div>
 </body>
 </html>

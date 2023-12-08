@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Logout Page</title>
+</head>
+<body>
+    <h1>Logout Page</h1>
+    <p>Click the "Logout" button to log out.</p>
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+</body>
+</html>

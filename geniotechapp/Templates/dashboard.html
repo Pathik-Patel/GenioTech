@@ -1,0 +1,362 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff512f, #dd2476);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .dashboard {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .card {
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            margin: 10px 0;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .card-header {
+            background: #2c3e50;
+            color: #fff;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 20px;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .list-group-item {
+            color: #2c3e50;
+            background: transparent;
+            border: none;
+            transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+        }
+
+        .list-group-item a {
+            color: #2c3e50;
+            text-decoration: none;
+            display: block;
+            padding: 5px 20px;
+        }
+
+        .list-group-item:hover {
+            transform: scale(1.02);
+            background-color: #f1f1f1;
+            border-radius: 5px;
+        }
+
+        .list-group-item:hover a {
+            color: #007bff;
+        }
+
+        .btn-logout {
+            background: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 30px;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+            display: block;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .btn-logout:hover {
+            background: #c82333;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="dashboard">
+        <div class="card">
+            <div class="card-header">
+                <p>Welcome, {{ user.full_name }}</p>
+            </div>
+            <!-- <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    {% if user.is_admin == 1 %}
+                    <li class="list-group-item"><a href="{% url 'course_list' %}">Manage Courses</a></li>
+                    <li class="list-group-item"><a href="{% url 'instructor_list' %}">Manage Instructors</a></li>
+                    <li class="list-group-item"><a href="{% url 'create_time_slot' %}">Create Time Slots</a></li>
+                    {% elif user.is_instructor == 1 %}
+                    <li class="list-group-item"><a href="{% url 'course_list' %}">My Courses</a></li>
+                    <li class="list-group-item"><a href="{% url 'assign_time_slot' instructor_id=user.id %}">Assign Time
+                            Slots</a></li>
+                    {% else %}
+                    <li class="list-group-item"><a href="{% url 'course_list' %}">My Courses</a></li>
+                    {% endif %}
+                </ul>
+                <button class="btn btn-logout" onclick="location.href='/logout'">Logout</button>
+            </div> -->
+
+            
+                <div class="card-body">
+                    
+                <ul class="list-group list-group-flush navbar-nav">
+                    {% if user.is_admin == 1 %}
+                    <li class="list-group-item" style="border-radius: 20px;"><a href="{% url 'course_list' user.id %}">Manage Courses</a></li>
+                    <li class="list-group-item" style="border-radius: 20px;"><a href="{% url 'instructor_list' %}">Manage Instructors</a></li>
+                    <li class="list-group-item" style="border-radius: 20px;"><a href="{% url 'create_time_slot' %}">Create Time Slots</a></li>
+                    {% elif user.is_instructor == 1 %}
+                        <li class="list-group-item" style="border-radius: 20px;"><a href="{% url 'course_list' user.id %}">Courses</a></li>
+                        <li class="list-group-item" style="border-radius: 20px;"><a href="{% url 'assign_time_slot' instructor_id=user.id %}">Assign Availability to Courses</a></li>
+                    {% else %}
+                    <nav class=" navbar navbar-expand-lg navbar-light bg-light" style="border-radius: 20px; padding: 0px;">
+                    <li class="list-group-item nav-item dropdown" style="width: 100%;">
+                        <a class="nav-link dropdown-toggle" href="#" id="coursesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Courses
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="coursesDropdown" >
+                            <a class="dropdown-item" href="{% url 'course_list' age_range='6-9' %}">For age 6 to 9</a>
+                            <a class="dropdown-item" href="{% url 'course_list' age_range='10-17' %}">For age 10 to 17</a>
+                        </div>
+                    </li>
+                </nav>
+                    {% endif %}
+                </ul>
+                <button class="btn btn-logout" onclick="location.href='/logout'">Logout</button>
+            
+            </div>
+            
+
+
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <title>Dashboard</title>
+    <style>
+        :root {
+            --primary-red: #aa0628;
+            --box-gradient-start: #ffffff;
+            --box-gradient-end: #f0f0f0;
+            --link-color: #2c3e50;
+            --hover-link-color: #195476;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--primary-red);
+            color: var(--link-color);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .card {
+            background: linear-gradient(to bottom right, var(--box-gradient-start), var(--box-gradient-end));
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: var(--link-color);
+            color: #fff;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .list-group-item {
+            color: var(--link-color);
+            background: transparent;
+            border: none;
+            transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+        }
+
+        .list-group-item a {
+            color: var(--link-color);
+            text-decoration: none;
+            display: block;
+            padding: 10px 20px;
+        }
+
+        .list-group-item:hover {
+            transform: scale(1.02);
+            background-color: #fff;
+        }
+
+        .list-group-item:hover a {
+            color: var(--hover-link-color);
+        }
+
+        .card-footer {
+            background: transparent;
+            border-top: none;
+        }
+
+        .btn-logout {
+            background: var(--link-color);
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 30px;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+            display: block;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-logout:hover {
+            background: var(--hover-link-color);
+            transform: scale(1.05);
+        }
+
+        .navbar-nav .nav-item.dropdown {
+            position: relative;
+        }
+
+        .navbar-nav .nav-item.dropdown .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .navbar-nav .nav-item.dropdown:hover .dropdown-menu {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card text-center">
+        <div class="card-header">
+            <p>Hey {{ user.full_name }}</p>
+        </div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <ul class="list-group list-group-flush navbar-nav">
+                {% if user.is_admin == 1 %}
+                    <li class="list-group-item nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="coursesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Courses
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="coursesDropdown">
+                            <a class="dropdown-item" href="{% url 'course_list' age_range='6-9' %}">For age 6 to 9</a>
+                            <a class="dropdown-item" href="{% url 'course_list' age_range='10-17' %}">For age 10 to 17</a>
+                        </div>
+                    </li>
+                    <li class="list-group-item"><a href="{% url 'instructor_list' %}">Instructors</a></li>
+                    <li class="list-group-item"><a href="{% url 'create_time_slot' %}">Create Availability Slots</a></li>
+                {% elif user.is_instructor == 1 %}
+                    <li class="list-group-item"><a href="{% url 'course_list' %}">Courses</a></li>
+                    <li class="list-group-item"><a href="{% url 'assign_time_slot' instructor_id=user.id %}">Assign Availability to Courses</a></li>
+                {% else %}
+                <li class="list-group-item nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="coursesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Courses
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="coursesDropdown">
+                        <a class="dropdown-item" href="{% url 'course_list' age_range='6-9' %}">For age 6 to 9</a>
+                        <a class="dropdown-item" href="{% url 'course_list' age_range='10-17' %}">For age 10 to 17</a>
+                    </div>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        <div class="card-footer bg-transparent" style="margin-top: 100px;">
+            <a href="/logout" class="btn btn-logout">Logout</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html> -->

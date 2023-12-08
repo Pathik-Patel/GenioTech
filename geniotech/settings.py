@@ -129,3 +129,26 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'geniotechapp.CustomUser'
+
+LOGIN_URL = 'login'  # Use the name of the login URL pattern you defined
+
+LOGIN_REDIRECT_URL = '/dashboard/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = False
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = 'pathikp901@gmail.com'
+EMAIL_HOST_PASSWORD = 'odml nkgv vzsh xbuo'
+
+import os
+
+# ...
+
+# Static files (CSS, JavaScript, images)
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+          integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+          crossorigin="anonymous"
+        />
+        <title>Assign Time Slot</title>
+        <style>
+          .title {
+            display: flex;
+            justify-content: center;
+            padding: 30px;
+            background-color: #38586a;
+            box-shadow: none;
+          }
+    
+          .course-section .col-md-12 {
+            padding: 0;
+          }
+    
+          .title h1 {
+            font-size: 60px;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-weight: 700;
+            color: #fff;
+          }
+          .assign {
+            padding: 80px 50px 80px 50px;
+            background-color: #aa0628;
+            border-radius: 50px;
+            margin: 50px 0 0 0;
+          }
+          .assign .heading{
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 50px;
+          }
+          .assign h2 {
+            color: #fff;
+            margin-bottom: 30px;
+          }
+          .assign li {
+            color: #edeaea;
+            margin-bottom: 20px;
+          }
+          .assign form {
+            display: grid;
+          }
+          .assign .button {
+            display: flex;
+            justify-content: center;
+          }
+          .assign button {
+            width: 135px;
+            height: 44px;
+            padding: 5px;
+            font-size: 20px;
+            border-radius: 4px;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            background-color: #ffffff;
+            color: #aa0628;
+            border: none;
+            font-weight: bold;
+            margin-top: 30px;
+          }
+          .assign ul {
+            padding: 0 0 0 20px;
+          }
+          .assign .link {
+            display: flex;
+            justify-content: space-between;
+          }
+    
+          .assign .link a {
+            text-decoration: underline;
+            color: #e7e7e7 !important;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+          }
+        </style>
+      </head>
+    
+<body>
+    <section class="course-section">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="title">
+                <h1>Assign Time Slot for {{ instructor.full_name }}</h1>
+    
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    
+      <section>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="assign">
+                <div class="heading">
+                  <div>
+                      <h2>Available Time Slots</h2>
+                      <ul>
+        {% for timeslot in available_time_slots %}
+            <li>
+                {{ timeslot.day }} {{ timeslot.start_time }} - {{ timeslot.end_time }}
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.course }}
+                    <input type="hidden" name="timeslot" value="{{ timeslot.id }}">
+                    <button type="submit">Assign</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+<div>
+    <h2>Assigned Time Slots</h2>
+    <ul>
+        {% for assignment in assigned_slots %}
+            <li>
+                {{ assignment.course }} - {{ assignment.timeslot }}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+<div class="link">
+    <a href="/courses/">Back to Course List</a>
+    <a href="/dashboard">dashboard</a>
+  </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</body>
+</html>

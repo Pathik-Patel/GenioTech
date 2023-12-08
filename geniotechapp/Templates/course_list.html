@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <title>Course List</title>
+    <style>
+        :root {
+            --primary-red: #aa0628;
+            --primary-dark: #2c3e50;
+            --secondary-light: #e6e6e6;
+            --action-edit: #4CAF50; /* Green for edit */
+            --action-delete: #f44336; /* Red for delete */
+            --hover-light: #f2f2f2;
+            --hover-dark: #204d74;
+            --box-gradient-start: #ff512f; /* Your gradient start color */
+            --box-gradient-end: #dd2476; /* Your gradient end color */
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, var(--box-gradient-start), var(--box-gradient-end)); /* Gradient background */
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px; /* Increased width */
+        }
+
+        h2 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 30px; /* Increased margin */
+        }
+
+        .box {
+            background: #2c3e50; /* Light gray background */
+            padding: 20px;
+            border-radius: 10px; /* Increased border-radius */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            color: #2c3e50; /* Dark text color */
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: var(--secondary-light);
+            margin-bottom: 20px; /* Increased margin */
+            padding: 20px;
+            border-radius: 10px; /* Increased border-radius */
+            position: relative;
+            transition: box-shadow 0.3s ease;
+        }
+
+        li:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        a {
+            color: var(--primary-dark);
+            text-decoration: none;
+            transition: color 0.2s ease-in-out;
+        }
+
+        a:hover {
+            color: var(--hover-dark);
+        }
+
+        .admin-links {
+            position: absolute;
+            right: 20px; /* Increased right margin */
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .admin-links a {
+            padding: 8px 16px; /* Adjusted padding */
+            margin: 0 5px;
+            border-radius: 6px; /* Increased border-radius */
+            color: #fff;
+        }
+
+        .admin-links a.edit {
+            background-color: var(--action-edit);
+        }
+
+        .admin-links a.delete {
+            background-color: var(--action-delete);
+        }
+
+        .admin-links a:hover {
+            opacity: 0.9;
+        }
+
+        .add-course,
+        .dashboard-link {
+            background-color: #fff;
+            color: var(--primary-dark);
+            text-align: center;
+            display: block;
+            padding: 12px 24px; /* Adjusted padding */
+            margin: 20px auto; /* Increased margin */
+            border-radius: 8px; /* Increased border-radius */
+            transition: background-color 0.3s ease;
+            width: auto;
+            text-decoration: none; /* Removed underline */
+        }
+
+        .add-course:hover,
+        .dashboard-link:hover {
+            background-color: var(--hover-light);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="box">
+            <h2>Course List</h2>
+            <ul>
+                {% for course in courses %}
+                    <li>
+                        <a href="{% url 'course_details' course.course_id %}">{{ course.title }}  </a>
+                        <!-- <p href="{% url 'course_details' course.course_id %}">For Age {{ course.from_age }} to {{ course.to_age }} </p>  -->
+                        <div class="admin-links">
+                            
+                            {% if is_admin %}
+                            <a href="{% url 'edit_course' course.course_id %}" class="edit">Edit</a>
+                            <a href="{% url 'delete_course' course.course_id %}" class="delete">Delete</a>
+                            {%else%}
+                            <p style="margin: auto;">Age : {{ course.from_age }} to {{ course.to_age }} </p>
+                            {% endif %}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        
+            
+            {% if is_admin %}
+            <a href="{% url 'add_course' %}" class="add-course">Add Course</a>
+            {% endif %}
+            <a href="/dashboard" class="dashboard-link">Dashboard</a>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+
+  
+  
+  
+  
+  
+  

@@ -1,0 +1,23 @@
+<table>
+    <thead>
+      <tr>
+        <th>Student ID</th>
+        <th>Student Name</th>
+        <th>Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for student_id, details in list_of_students.items %}
+        <tr>
+          <td>{{ student_id }}</td>
+          {% for name, time in details.items %}
+            <td>{{ name }}</td>
+            <td>{{ time }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <a href="/dashboard">dashboard</a>
+  

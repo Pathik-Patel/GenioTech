@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ course.title }} Time Slots</title>
+</head>
+<body>
+    <h1>{{ course.title }} Time Slots</h1>
+
+    <ul>
+        {% for assignment in time_slot_assignments %}
+            <li>
+                {{ assignment.instructor.full_name }} - {{ assignment.timeslot.day }}
+                {{ assignment.timeslot.start_time }} - {{ assignment.timeslot.end_time }}
+                {% if assignment.zoom_link %}
+                    - Zoom Link: <a href="{{ assignment.zoom_link }}" target="_blank">{{ assignment.zoom_link }}</a>
+                {% else %}
+                    - <a href="{% url 'assign_zoom_link' assignment.id %}">Assign Zoom Link</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

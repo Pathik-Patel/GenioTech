@@ -1,0 +1,23 @@
+{% block content %}
+<h2>View Time Slots for Instructor: {{ instructor.full_name }}</h2>
+<form method="post" action="{% url 'assign_time_slots' course.course_id %}">
+    {% csrf_token %}
+    <h3>Select Time Slots for Course: {{ course.title }}</h3>
+    <ul>
+        {% for slot in available_time_slots %}
+            <li>
+                <label>
+                    <input type="checkbox" name="time_slot" value="{{ slot.id }}"
+                           {% if slot in course.time_slots.all %}checked{% endif %}>
+                    {{ slot }}
+                </label>
+            </li>
+        {% empty %}
+            <li>No time slots available.</li>
+        {% endfor %}
+    </ul>
+    <button type="submit">Assign Slots</button>
+</form>
+<a href="{% url 'course_list' %}">Back to Course List</a>
+<a href="/dashboard">dashboard</a>
+{% endblock %}

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Assign Zoom Link</title>
+</head>
+<body>
+    <h1>Assign Zoom Link</h1>
+
+    {% if time_slot_assignment.zoom_link %}
+        <p>Zoom Link: <a href="{{ time_slot_assignment.zoom_link }}" target="_blank">{{ time_slot_assignment.zoom_link }}</a></p>
+    {% else %}
+        <form method="post">
+            {% csrf_token %}
+            <label for="zoom_link">Zoom Link:</label>
+            <input type="url" id="zoom_link" name="zoom_link" required>
+            <button type="submit">Assign Zoom Link</button>
+        </form>
+    {% endif %}
+</body>
+</html>
